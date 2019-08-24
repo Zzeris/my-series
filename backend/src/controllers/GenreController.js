@@ -10,16 +10,36 @@ module.exports = {
 
         return res.json(genre);
     },
-    index(req, res) {
-        return res.json();
+    async index(req, res) {
+        const genres = await Genre.find();
+        return res.json(genres);
     },
-    single(req, res) {
-        return res.json();
+    async single(req, res) {
+        const { id } = req.params;
+
+        const genre = await Genre.findById(id);
+
+        return res.json(genre);
     },
-    edit(req, res) {
-        return res.json();
+    async edit(req, res) {
+        const { id } = req.params;
+        const { name } = req.body;
+
+        const genre = await Genre.findById(id);
+
+        genre.name = name;
+
+        genre.save();
+
+        return res.json(genre);
     },
-    remove(req, res) {
-        return res.json();
+    async remove(req, res) {
+        const { id } = req.params;
+
+        const genre = await Genre.findById(id);
+
+        await genre.remove();
+
+        return res.json(genre);
     }
 }

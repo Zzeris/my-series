@@ -5,7 +5,7 @@ const SerieSchema = new Schema({
     status: String,
     comments: String,
     poster: String,
-    genreId: {
+    genre: {
         type: Schema.Types.ObjectId,
         ref: 'Genre'
     }

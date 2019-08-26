@@ -9,7 +9,7 @@ const upload = multer(uploadConfig);
 router.get('/', SerieController.index);
 router.get('/:id', SerieController.single);
 router.post('/', upload.single('image'), SerieController.store);
-router.put('/:id', SerieController.edit);
+router.put('/:id', upload.single('image'), SerieController.edit);
 router.delete('/:id', SerieController.remove);
 
 module.exports = router;

@@ -2,7 +2,7 @@ const Serie = require('../models/Serie');
 
 module.exports = {
     async store(req, res) {
-        const { name, status, comments, genreId } = req.body;
+        const { name, status, comments, genre } = req.body;
         const { filename } = req.file;
 
         const [description] = filename.split('.');
@@ -13,23 +13,50 @@ module.exports = {
             status,
             comments,
             poster,
-            genreId
+            genre
         });
 
         return res.json(serie);
     },
     async index(req, res) {
-        const series = await Serie.find();
+        const series = await Serie.find().populate('genre');
 
         return res.json(series);
     },
     async single(req, res) {
-        return res.json();
+        const { id } = req.params;
+
+        const serie = await Serie.findById(id).populate('genre');
+
+        return res.json(serie);
     },
     async edit(req, res) {
-        return res.json();
+        const { id } = req.params;
+        const { name, status, comments, genre } = req.body;
+        const { filename } = req.file;
+        
+        const [description] = filename.split('.');
+        const poster = `${description}.jpg`;
+
+        const serie = await Serie.findById(id);
+
+        serie.name = name;
+        serie.status = status;
+        serie.comments = comments;
+        serie.genre = genre;
+        serie.poster = poster;
+
+        await serie.save();
+
+        return res.json(serie);
     },
     async remove(req, res) {
-        return res.json();
+        const { id } = req.params;
+
+        const serie = await Serie.findById(id);
+
+        await serie.remove();
+
+        return res.json(serie);
     }
 }

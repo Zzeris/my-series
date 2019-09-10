@@ -6,22 +6,16 @@ import {
     Button
 } from 'reactstrap';
 
-import { Redirect } from 'react-router-dom';
-
 import api from '../services/api';
 
-export default function NewGenre() {
+export default function NewGenre({history}) {
     const [name, setName] = useState('');
-    const [success, setSuccess] = useState(false);
     
     async function save() {
         if (name) {
             await api.post('/genres', { name })
-            setSuccess(true)
+            history.push('/genres')
         }
-    }
-    if (success) {
-        return <Redirect to='/genres' />
     }
 
     return(

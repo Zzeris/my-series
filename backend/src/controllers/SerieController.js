@@ -1,7 +1,7 @@
 const Serie = require('../models/Serie');
 
 module.exports = {
-    async store(req, res) {
+    async store(req, res) { 
         const { name, status, comments, genre } = req.body;
         const { filename } = req.file;
 

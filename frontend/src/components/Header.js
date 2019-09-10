@@ -18,15 +18,20 @@ export default function Header() {
     return (
         <div>
             <Navbar color="light" light expand="md">
-                <NavbarBrand tag={Link} to="/">Minhas Séries</NavbarBrand>
-                <NavbarToggler onClick={toggle} />
-                <Collapse isOpen={open} navbar>
-                    <Nav className="ml-auto">
-                        <NavItem>
-                            <NavLink tag={Link} to="/genres">Gêneros</NavLink>
-                        </NavItem>
-                    </Nav>
-                </Collapse>
+                <div className='container'>
+                    <NavbarBrand tag={Link} to="/">Minhas Séries</NavbarBrand>
+                    <NavbarToggler onClick={toggle} />
+                    <Collapse isOpen={open} navbar>
+                        <Nav className="ml-auto">
+                            <NavItem>
+                                <NavLink tag={Link} to="/series/new">Nova Série</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink tag={Link} to="/genres">Gêneros</NavLink>
+                            </NavItem>
+                        </Nav>
+                    </Collapse>
+                </div>
             </Navbar>
         </div>
     );

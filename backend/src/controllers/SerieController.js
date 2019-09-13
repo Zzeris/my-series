@@ -19,7 +19,7 @@ module.exports = {
         return res.json(serie);
     },
     async index(req, res) {
-        const series = await Serie.find().populate('genre');
+        const series = await Serie.find().populate('genre','name -_id');
 
         return res.json(series);
     },

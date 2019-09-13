@@ -6,6 +6,7 @@ import Genres from './pages/Genre';
 import NewGenre from './pages/NewGenre';
 import EditGenre from './pages/EditGenre';
 import NewSerie from './pages/NewSerie';
+import InfoSerie from './pages/InfoSerie';
 
 export default function Routes() {
     return (
@@ -15,6 +16,7 @@ export default function Routes() {
             <Route path="/genres/new" exact component={NewGenre} />
             <Route path="/genres/:id" exact component={EditGenre} />
             <Route path="/series/new" exact component={NewSerie} />
+            <Route path="/series/:id" exact component={InfoSerie} />
         </Switch>
     );
 }

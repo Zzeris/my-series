@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Badge } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 import './Home.css';
 
 import api from '../services/api';
 
 export default function Home() {
+    //const [status, setStatus] = useState('');
     const [series, setSeries] = useState([]);
     useEffect(()=>{
         async function loadSeries() {
@@ -14,6 +15,16 @@ export default function Home() {
         }
         loadSeries();
     },[]);
+
+    async function handleStatus(id) {
+        //await api.delete(`/series/${id}`);
+        //setSeries(series.filter(serie => serie._id !== id));
+    }
+
+    async function handleRemove(id) {
+        await api.delete(`/series/${id}`);
+        setSeries(series.filter(serie => serie._id !== id));
+    }
 
     return (
         <div className="main-container">
@@ -24,9 +35,19 @@ export default function Home() {
                             <img src={`http://localhost:3333/files/${serie.poster}`} alt={serie.name}/>
                             <footer>
                                 <strong>{serie.name}</strong>
-                                <p>{serie.genre}</p>
-                                <p>{serie.comments}</p>
-                                <Badge>{serie.status}</Badge>
+                                <p>Gênero: {}</p>
+                                <span>{serie.comments}</span>
+                                <div className="buttons">
+                                    <button color="#130042" type="button" onClick={() => handleStatus(serie._id)}>
+                                        {serie.status}
+                                    </button>
+                                    <button type="button" >
+                                        <Link to={`/series/${serie._id}`} >INFO</Link>
+                                    </button>
+                                    <button type="button" onClick={() => handleRemove(serie._id)}>
+                                        Excluir
+                                    </button>
+                                </div>
                             </footer>
                         </li>
                     ))}

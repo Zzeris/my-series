@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
     FormGroup,
     Label,
@@ -10,30 +10,19 @@ import { Link } from 'react-router-dom';
 
 import api from '../services/api';
 
-export default function NewSerie({history}) {
+export default function NewSerie({ history, match }) {
     const [poster, setPoster] = useState({});
     const [name, setName] = useState('');
     const [comments, setComments] = useState('');
-    const [genreId, setGenreid] = useState('');
-    const [genres, setGenres] = useState([]);
-    useEffect(()=>{
-        async function loadGenres() {
-            const response = await api.get('/genres')
-            setGenres(response.data);
-        }
-        loadGenres();
-    },[]);
 
     async function handleSubmit(e) {
         e.preventDefault();
         const data = new FormData();
         data.append('poster', poster);
         data.append('name', name);
-        data.append('genre', genreId);
         data.append('comments', comments);
-        data.append('status', 'ASSISTIR');
 
-        await api.post('/series', data)
+        await api.put(`/series/${match.params.id}`, data)
         history.push('/')
     }
 
@@ -56,11 +45,6 @@ export default function NewSerie({history}) {
                         value={name}
                         onChange={e => setName(e.target.value)}
                     />
-
-                    <Label for="genres">Gênero</Label>
-                    <Input type="select" name="genres" onChange={e => setGenreid(e.target.value)}>
-                        {genres.map(genre => <option key={genre._id} value={genre._id}>{genre.name}</option>)}
-                    </Input>
 
                     <Label for="name">Comentários</Label>
                     <Input

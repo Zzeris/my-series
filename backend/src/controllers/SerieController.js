@@ -1,7 +1,10 @@
+const fs = require('fs');
+const path = require('path');
+const { promisify } = require('util');
 const Serie = require('../models/Serie');
 
 module.exports = {
-    async store(req, res) { 
+    async store(req, res) {
         const { name, status, comments, genre } = req.body;
         const { filename } = req.file;
 
@@ -55,8 +58,10 @@ module.exports = {
 
         const serie = await Serie.findById(id);
 
+        promisify(fs.unlink)(path.resolve(__dirname, '..', '..', 'uploads', serie.poster));
+
         await serie.remove();
 
-        return res.json(serie);
+        return res.json({ok: true});
     }
 }

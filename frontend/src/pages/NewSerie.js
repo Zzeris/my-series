@@ -16,10 +16,12 @@ export default function NewSerie({history}) {
     const [comments, setComments] = useState('');
     const [genreId, setGenreid] = useState('');
     const [genres, setGenres] = useState([]);
+
     useEffect(()=>{
         async function loadGenres() {
             const response = await api.get('/genres')
             setGenres(response.data);
+            setGenreid(response.data[0]._id)
         }
         loadGenres();
     },[]);
@@ -62,7 +64,7 @@ export default function NewSerie({history}) {
                         {genres.map(genre => <option key={genre._id} value={genre._id}>{genre.name}</option>)}
                     </Input>
 
-                    <Label for="name">Comentários</Label>
+                    <Label for="comments">Comentários</Label>
                     <Input
                         type="text"
                         name="comments"

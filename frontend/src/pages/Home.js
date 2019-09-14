@@ -6,7 +6,7 @@ import './Home.css';
 import api from '../services/api';
 
 export default function Home() {
-    //const [status, setStatus] = useState('');
+    const [status, setStatus] = useState('');
     const [series, setSeries] = useState([]);
     useEffect(()=>{
         async function loadSeries() {
@@ -14,11 +14,11 @@ export default function Home() {
             setSeries(response.data);
         }
         loadSeries();
-    },[]);
+    },[status]);
 
     async function handleStatus(id) {
-        //await api.delete(`/series/${id}`);
-        //setSeries(series.filter(serie => serie._id !== id));
+        const editStatus = await api.post(`/series/${id}/status`);
+        setStatus(editStatus.data);
     }
 
     async function handleRemove(id) {
@@ -35,10 +35,10 @@ export default function Home() {
                             <img src={`http://localhost:3333/files/${serie.poster}`} alt={serie.name}/>
                             <footer>
                                 <strong>{serie.name}</strong>
-                                <p>Gênero: {}</p>
+                                <p>Gênero: {JSON.stringify(serie.genre)}</p>
                                 <span>{serie.comments}</span>
                                 <div className="buttons">
-                                    <button color="#130042" type="button" onClick={() => handleStatus(serie._id)}>
+                                    <button type="button" onClick={() => handleStatus(serie._id)}>
                                         {serie.status}
                                     </button>
                                     <button type="button" >

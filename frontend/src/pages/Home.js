@@ -35,7 +35,7 @@ export default function Home() {
                             <img src={`http://localhost:3333/files/${serie.poster}`} alt={serie.name}/>
                             <footer>
                                 <strong>{serie.name}</strong>
-                                <p>Gênero: {Object.values(serie.genre.name)}</p>
+                                <p>Gênero: {serie.genre.name}</p>
                                 <span>{serie.comments}</span>
                                 <div className="buttons">
                                     <button type="button" onClick={() => handleStatus(serie._id)}>

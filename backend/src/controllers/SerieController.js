@@ -22,7 +22,7 @@ module.exports = {
         return res.json(serie);
     },
     async index(req, res) {
-        const series = await Serie.find().populate('genre','name -_id');
+        const series = await Serie.find().populate('genre');
 
         return res.json(series);
     },
